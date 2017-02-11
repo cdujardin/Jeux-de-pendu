@@ -5,16 +5,26 @@
           <title>Jeu de pendu en Javascipt</title>
           <link rel=Stylesheet type="text/css" href=stylePendu.css>
           <script language="JavaScript">
+               // Le mot à deviner
                 var motSecret;
 
-                var tableauLettres=new Array();    // Le tableau qui contient les lettres du mot à trouver
-                var mots=new Array();        // Le tableau qui contient tous les mots possibles
+                 // Le tableau qui contient les lettres du mot à trouver
+                var tableauLettres=new Array();
 
-                var tailleMot;                // Le nombre de lettres du mot à trouver
-                var coupsManques=0;            // Le nombre de lettres fausses essayées
-                var lettresTrouvees=0;        // Le nombre de lettres trouvées
-                var fini=false;                // true si le jeu est terminé
+                 // Le tableau qui contient tous les mots possibles
+                var mots=new Array();
 
+                 // Le nombre de lettres du mot à trouver
+                var tailleMot;
+                 // Le nombre de lettres fausses essayées
+                var coupsManques=0;
+                // Le nombre de lettres trouvées
+                var lettresTrouvees=0;
+                // true si le jeu est terminé
+                var fini=false;
+
+
+                // On met des mots à deviner dans le tableau
                 mots[0]="TITANESQUE";
                 mots[1]="ANABELLE";
                 mots[2]="POMPIER";
@@ -31,9 +41,10 @@
 
                 // On prend un mot au hasard
                 motSecret=mots[Math.floor(Math.random()*12)];
+                // On compte le nombre de lettres à afficher et à chercher
                 tailleMot=motSecret.length;
 
-                // Permet de changer la couleur des touches du clavier
+                // Permet de changer la couleur des touches du clavier déjà utilisées
                 function changeCouleur(element,couleur){
                     element.style.backgroundColor=couleur;
                 }
@@ -56,7 +67,8 @@
 
                         // Si c'est le cas :
                         if(tableauLettres[i].innerHTML==lettre) {
-                            tableauLettres[i].style.visibility='visible';    // On affiche la lettre
+                              // On affiche la lettre
+                            tableauLettres[i].style.visibility='visible';
                             trouve=true;
                             lettresTrouvees++;
                         }
@@ -66,21 +78,27 @@
                     // Si la lettre n'est pas présente, trouvé vaut toujours false :
                     if(!trouve){
                         coupsManques++;
-                        document.images['pendu'].src="img/pendu_"+coupsManques+".png"; // On change l'image du pendu
+                        // On change l'image du pendu
+                        document.images['pendu'].src="img/pendu_"+coupsManques+".png";
 
-                        // Si on a raté 9 fois :
+                        // Si on a raté 11 fois + 1 alors
+                        // On affiche le mot
+                        // On fini le jeu avec une PopUp Perdu
                         if(coupsManques==11){
                             alert("Vous avez perdu !");
                             for(var i=0; i<tailleMot; i++) tableauLettres[i].style.visibility='visible';
                             fini=true;
-                            // on affiche le mot, on fini le jeu
                         }
                     }
+
+                    // Si les toutes les lettres ont été trouvées
+                    // Alors on affiche une PopUp GG
                     if(lettresTrouvees==tailleMot){
                         alert("Bravo ! Vous avez découvert le mot secret !");
                         fini=true;
                     }
                 }
+
         </script>
     </head>
 
@@ -95,6 +113,7 @@
 
               <p>Entrez une lettre grâce au clavier ci-dessous. Si elle est dans le mot secret, elle sera affichée mais sinon... la sentence se rapprochera !</p>
 
+             <!-- Affichage du clavier -->
               <table id="clavier">
                <tr>
                 <td onclick="proposer(this);" >A</td>
@@ -129,13 +148,17 @@
                 <td onclick="proposer(this);" >Z</td>
                </tr>
               </table>
-              <br>
+
+
+              <!-- Lien de réinitialisation de partie -->
               <a class="lien" href="javascript:location.reload();">Nouvelle partie</a>
 
 
+              <!-- illustration du pendu -->
                <img name="pendu" id="pendu" src="img/pendu_0.png"/>
 
 
+               <!-- Affiche le mot secret & les   _ _ _ _ _ _ -->
               <table id="mot">
                   <tr>
                       <script language="javascript">
@@ -146,7 +169,8 @@
 
 
               <script language="javascript">
-                  for(var i=0; i<tailleMot; i++) tableauLettres[i]=document.getElementById(i);
+                    //Affiche les lettres validées  du mot secret
+                    for(var i=0; i<tailleMot; i++) tableauLettres[i]=document.getElementById(i);
               </script>
 
           <center>
